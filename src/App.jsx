@@ -9,9 +9,9 @@ import BarChart from "./components/Charts/BarChart";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import Nav from "./components/Nav/Nav";
-
+import { dataContext } from "./context/context";
 //  DATA
-import { UserData, userData } from "./Data";
+import { UserData } from "./Data";
 
 const App = () => {
   const [userData, setUserData] = useState({
@@ -28,8 +28,10 @@ const App = () => {
     <>
       <Header />
       <Nav />
-      <FileImporter />
-      <BarChart chartData={userData} />
+      <dataContext.Provider value={{ userData, setUserData }}>
+        <FileImporter />
+        <BarChart />
+      </dataContext.Provider>
       <Footer />
     </>
   );

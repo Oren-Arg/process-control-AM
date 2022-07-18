@@ -1,7 +1,8 @@
 import Papa from "papaparse";
-import { useState } from "react";
-
+import { useContext, useState } from "react";
+import { dataContext } from "../../context/context";
 const FileImporter = () => {
+  const { setUserData } = useContext(dataContext);
   const [file, setFile] = useState();
 
   const fileReader = new FileReader();
@@ -17,6 +18,7 @@ const FileImporter = () => {
       fileReader.onload = function (event) {
         const csvOutput = Papa.parse(event.target.result);
         console.log(csvOutput.data[0]);
+        setUserData(csvOutput.data);
       };
 
       fileReader.readAsText(file);

@@ -1,9 +1,12 @@
 import React from "react";
-import { Bar } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 import { Chart as ChartJS } from "chart.js/auto";
+import { useContext } from "react";
+import { dataContext } from "../../context/context";
 
-const BarChart = ({ chartData }) => {
-  return <Bar data={chartData} height={100} />;
+const BarChart = () => {
+  const { userData } = useContext(dataContext);
+  return <Line data={userData} height={100} />;
 };
 
 export default BarChart;
