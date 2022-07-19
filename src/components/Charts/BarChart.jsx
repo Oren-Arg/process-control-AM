@@ -1,5 +1,7 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
+
+// DISPLAYS THE CHART
 import { Chart as ChartJS } from "chart.js/auto";
 
 const BarChart = (props) => {
