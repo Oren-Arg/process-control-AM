@@ -1,10 +1,10 @@
 //  REACT
 import React from "react";
 
-import FileImporter from "./components/FileImporter/FileImporter";
 import { useState } from "react";
 
 //  COMPONENTS
+import FileImporter from "./components/FileImporter/FileImporter";
 import BarChart from "./components/Charts/BarChart";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
