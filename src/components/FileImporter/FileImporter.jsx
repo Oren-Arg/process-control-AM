@@ -1,12 +1,21 @@
 import Papa from "papaparse";
-import { useContext, useState } from "react";
-import { dataContext } from "../../context/context";
-const FileImporter = () => {
-  const { setUserData } = useContext(dataContext);
+import { useState } from "react";
+const { transpose } = require("matrix-transpose");
+
+const FileImporter = (props) => {
   const [file, setFile] = useState();
-
+  const setUserData = props.data;
   const fileReader = new FileReader();
+  const organizeData = (dataSet) => {
+    const headers = dataSet.splice(0, 1);
+    const tarnsposedArr = transpose(dataSet);
+    const dataObject = {};
+    headers[0].forEach(
+      (header, ind) => (dataObject[header] = tarnsposedArr[ind])
+    );
 
+    setUserData(dataObject);
+  };
   const handleOnChange = (e) => {
     setFile(e.target.files[0]);
   };
@@ -16,9 +25,13 @@ const FileImporter = () => {
 
     if (file) {
       fileReader.onload = function (event) {
-        const csvOutput = Papa.parse(event.target.result);
-        console.log(csvOutput.data[0]);
-        setUserData(csvOutput.data);
+        const csvOutput = Papa.parse(event.target.result, {
+          header: false, //set to 'true' if you want the data to be saved as an array of objects with the first array as the keys.
+          complete: () => {
+            console.log("File successfully parsed");
+          },
+        });
+        organizeData(csvOutput.data);
       };
 
       fileReader.readAsText(file);
@@ -26,7 +39,7 @@ const FileImporter = () => {
   };
   return (
     <div style={{ textAlign: "center" }}>
-      <h1>REACTJS CSV IMPORT EXAMPLE </h1>
+      <h1>Log Viewer</h1>
       <form>
         <input
           type={"file"}

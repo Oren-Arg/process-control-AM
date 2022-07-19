@@ -9,7 +9,7 @@ import BarChart from "./components/Charts/BarChart";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import Nav from "./components/Nav/Nav";
-import { dataContext } from "./context/context";
+
 //  DATA
 import { UserData } from "./Data";
 
@@ -28,10 +28,8 @@ const App = () => {
     <>
       <Header />
       <Nav />
-      <dataContext.Provider value={{ userData, setUserData }}>
-        <FileImporter />
-        <BarChart />
-      </dataContext.Provider>
+      <FileImporter data={setUserData} />
+      <BarChart data={userData} />
       <Footer />
     </>
   );
