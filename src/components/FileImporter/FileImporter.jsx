@@ -14,9 +14,17 @@ const FileImporter = (props) => {
     headers[0].forEach((header, ind) => {
       dataObject[header] = tarnsposedArr[ind];
     });
+    const reduceData = (dataObj) => {
+      let reduced = [];
+
+      for (let i = 0; i < dataObj.length; i += 100) {
+        reduced.push(dataObj[i]);
+      }
+      return reduced;
+    };
     const datasetObject = {
-      labels: dataObject.Time,
-      datasets: [{ label: "Pump1", data: dataObject.Pump1 }],
+      labels: reduceData(dataObject.Time),
+      datasets: [{ label: "Pump1", data: reduceData(dataObject.Pump1) }],
     };
     setData(datasetObject);
   };
