@@ -4,17 +4,21 @@ const { transpose } = require("matrix-transpose");
 
 const FileImporter = (props) => {
   const [file, setFile] = useState();
-  const setUserData = props.data;
   const fileReader = new FileReader();
-  const organizeData = (dataSet) => {
-    const headers = dataSet.splice(0, 1);
-    const tarnsposedArr = transpose(dataSet);
-    const dataObject = {};
-    headers[0].forEach(
-      (header, ind) => (dataObject[header] = tarnsposedArr[ind])
-    );
 
-    setUserData(dataObject);
+  const setData = props.data;
+  const organizeData = (data) => {
+    const headers = data.splice(0, 1);
+    const tarnsposedArr = transpose(data);
+    const dataObject = {};
+    headers[0].forEach((header, ind) => {
+      dataObject[header] = tarnsposedArr[ind];
+    });
+    const datasetObject = {
+      labels: dataObject.Time,
+      datasets: [{ label: "Pump1", data: dataObject.Pump1 }],
+    };
+    setData(datasetObject);
   };
   const handleOnChange = (e) => {
     setFile(e.target.files[0]);

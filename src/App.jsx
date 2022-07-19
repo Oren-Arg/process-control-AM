@@ -14,7 +14,7 @@ import Nav from "./components/Nav/Nav";
 import { UserData } from "./Data";
 
 const App = () => {
-  const [userData, setUserData] = useState({
+  const [data, setData] = useState({
     labels: UserData.map((data) => data.year),
     datasets: [
       {
@@ -28,8 +28,8 @@ const App = () => {
     <>
       <Header />
       <Nav />
-      <FileImporter data={setUserData} />
-      <BarChart data={userData} />
+      <FileImporter data={setData} />
+      <BarChart data={data} />
       <Footer />
     </>
   );
