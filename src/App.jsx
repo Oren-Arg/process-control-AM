@@ -1,12 +1,7 @@
 //  REACT
 import React from "react";
 
-<<<<<<< HEAD
-import FileImporter from "./components/FileImporter/FileImporter";
-import { useState , useEffect} from "react";
-=======
 import { useState } from "react";
->>>>>>> 8ceea42c053131dbbf66880c97181ad5028bf780
 
 //  COMPONENTS
 import FileImporter from "./components/FileImporter/FileImporter";
@@ -19,26 +14,14 @@ import Nav from "./components/Nav/Nav";
 import { UserData } from "./Data";
 
 const App = () => {
-<<<<<<< HEAD
-  const [userData, setUserData] = useState({});
-=======
-  const [data, setData] = useState({
-    labels: UserData.map((data) => data.year),
-    datasets: [
-      {
-        label: "Users Gained",
-        data: UserData.map((data) => data.userGain),
-      },
-    ],
-  });
->>>>>>> 8ceea42c053131dbbf66880c97181ad5028bf780
+  const [data, setData] = useState(null);
 
   return (
     <>
       <Header />
       <Nav />
       <FileImporter data={setData} />
-      <BarChart data={data} />
+      {data && <BarChart data={data} />}
       <Footer />
     </>
   );
