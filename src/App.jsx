@@ -11,7 +11,7 @@ import Header from "./components/Header/Header";
 import Nav from "./components/Nav/Nav";
 
 //  DATA
-import { UserData } from "./Data";
+
 
 const App = () => {
   const [data, setData] = useState(null);
