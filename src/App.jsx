@@ -2,7 +2,7 @@
 import React from "react";
 
 import FileImporter from "./components/FileImporter/FileImporter";
-import { useState } from "react";
+import { useState , useEffect} from "react";
 
 //  COMPONENTS
 import BarChart from "./components/Charts/BarChart";
@@ -14,15 +14,7 @@ import Nav from "./components/Nav/Nav";
 import { UserData } from "./Data";
 
 const App = () => {
-  const [userData, setUserData] = useState({
-    labels: UserData.map((data) => data.year),
-    datasets: [
-      {
-        label: "Users Gained",
-        data: UserData.map((data) => data.userGain),
-      },
-    ],
-  });
+  const [userData, setUserData] = useState({});
 
   return (
     <>
