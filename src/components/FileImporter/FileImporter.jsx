@@ -22,9 +22,10 @@ const FileImporter = (props) => {
       }
       return reduced;
     };
+
     const datasetObject = {
       labels: reduceData(dataObject.Time),
-      datasets: [{ label: "Pump1", data: reduceData(dataObject.Pump1) }],
+      datasets: [{ label: "Pump1", data: reduceData(dataObject.pump1) }],
     };
     setData(datasetObject);
   };
