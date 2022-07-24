@@ -3,31 +3,26 @@ import { Line } from "react-chartjs-2";
 import * as brush from "chartjs-plugin-brush";
 import zoom from "chartjs-plugin-zoom";
 // DISPLAYS THE CHART
-import { Chart as ChartJS } from "chart.js/auto";
+
+import { Chart as ChartJS, registerables } from "chart.js";
+
+ChartJS.register(...registerables);
 
 const BarChart = (props) => {
   const dataSet = props.data;
   const options = {
-    scales: {
-      xAxes: [
-        {
-          stacked: true,
+    plugins: {
+      zoom: {
+        zoom: {
+          wheel: {
+            enabled: true,
+          },
+          pinch: {
+            enabled: true,
+          },
+          mode: "xy",
         },
-      ],
-      yAxes: [
-        {
-          stacked: true,
-        },
-      ],
-    },
-    pan: {
-      enabled: true,
-      mode: "x",
-    },
-    zoom: {
-      enabled: true,
-      mode: "xy",
-      sensitivity: 0.5,
+      },
     },
   };
   console.log(dataSet);
