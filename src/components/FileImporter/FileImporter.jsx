@@ -9,13 +9,10 @@ const FileImporter = (props) => {
   const setData = props.data;
 
   const logParser = (file) => {
-    let fileRows = file
-      .split(/\r?\n/)
-      .map((row) => row.split(" INFO Script: "));
-    // fileRows.forEach((row) => {
-    //   row[0] = row[0].split(" ");
-    // });
-    console.log(fileRows);
+    let fileRows = file.split(/\r?\n/);
+    let timeArray = fileRows.map((row) => row.split(" ", 2));
+
+    console.log(fileRows[0], timeArray[0]);
   };
 
   const organizeData = (data) => {
