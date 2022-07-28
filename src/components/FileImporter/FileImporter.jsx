@@ -7,6 +7,17 @@ const FileImporter = (props) => {
   const fileReader = new FileReader();
 
   const setData = props.data;
+
+  const logParser = (file) => {
+    let fileRows = file
+      .split(/\r?\n/)
+      .map((row) => row.split(" INFO Script: "));
+    // fileRows.forEach((row) => {
+    //   row[0] = row[0].split(" ");
+    // });
+    console.log(fileRows);
+  };
+
   const organizeData = (data) => {
     const headers = data.splice(0, 1);
     const tarnsposedArr = transpose(data);
@@ -14,6 +25,7 @@ const FileImporter = (props) => {
     headers[0].forEach((header, ind) => {
       dataObject[header] = tarnsposedArr[ind];
     });
+
     const reduceData = (dataObj) => {
       const len = dataObj.length;
 
@@ -31,6 +43,7 @@ const FileImporter = (props) => {
     };
     setData(datasetObject);
   };
+
   const handleOnChange = (e) => {
     setFile(e.target.files[0]);
   };
@@ -38,28 +51,44 @@ const FileImporter = (props) => {
   const handleOnSubmit = (e) => {
     e.preventDefault();
 
-    if (file) {
+    if (file.type == "text/csv") {
       fileReader.onload = function (event) {
         const csvOutput = Papa.parse(event.target.result, {
           header: false, //set to 'true' if you want the data to be saved as an array of objects with the first array as the keys.
           complete: () => {
-            console.log("File successfully parsed");
+            console.log("CSV file successfully parsed");
           },
         });
         organizeData(csvOutput.data);
       };
 
       fileReader.readAsText(file);
+    } else if (file.type == "application/dflog") {
+      fileReader.onload = function (event) {
+        logParser(event.target.result);
+      };
+
+      fileReader.readAsText(file);
+    } else {
+      console.log("File not supported");
     }
   };
   return (
     <div style={{ textAlign: "center" }}>
       <h1>Log Viewer</h1>
       <form>
+        <label htmlFor="csvFileInput">Choose CSV File</label>
         <input
           type={"file"}
           id={"csvFileInput"}
           accept={".csv"}
+          onChange={handleOnChange}
+        />
+        <label htmlFor="logFileInput">Choose Log File</label>
+        <input
+          type={"file"}
+          id={"logFileInput"}
+          accept={".log"}
           onChange={handleOnChange}
         />
 
@@ -68,7 +97,7 @@ const FileImporter = (props) => {
             handleOnSubmit(e);
           }}
         >
-          IMPORT CSV
+          Plot Data
         </button>
       </form>
     </div>
