@@ -2,7 +2,7 @@
 import React from "react";
 
 import { useState } from "react";
-
+import { dataContext } from "./context/dataContext";
 //  COMPONENTS
 import FileImporter from "./components/FileImporter/FileImporter";
 import BarChart from "./components/Charts/BarChart";
@@ -36,8 +36,10 @@ const App = () => {
     <>
       <Header />
       <Nav />
-      <FileImporter data={setData} />
-      {data && <BarChart data={data} />}
+      <dataContext.Provider value={setData}>
+        <FileImporter />
+        {data && <BarChart data={data} />}
+      </dataContext.Provider>
       <Footer />
     </>
   );
