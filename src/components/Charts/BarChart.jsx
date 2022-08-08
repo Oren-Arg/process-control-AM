@@ -1,7 +1,6 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
-import * as brush from "chartjs-plugin-brush";
-import zoom from "chartjs-plugin-zoom";
+
 // DISPLAYS THE CHART
 import { Chart as ChartJS } from "chart.js/auto";
 
