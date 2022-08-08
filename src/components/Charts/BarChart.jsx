@@ -25,7 +25,13 @@ const BarChart = (props) => {
           mode: "xy",
         },
       },
-      tooltip: {},
+      tooltip: {
+        callbacks: {
+          afterTitle: function (context) {
+            return `Log message: ${/*logRows[0] ||*/ "nothing"}`;
+          },
+        },
+      },
     },
   };
   console.log(dataSet);

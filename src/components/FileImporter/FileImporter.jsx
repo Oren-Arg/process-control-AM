@@ -3,18 +3,19 @@ import { useState, useContext } from "react";
 import { dataContext } from "../../context/dataContext";
 const fileReader = new FileReader();
 const { transpose } = require("matrix-transpose");
-
+let logRows;
 const FileImporter = () => {
-  const [file, setFile] = useState();
+  const [csvFile, setCsvFile] = useState();
+  const [logFile, setLogFile] = useState();
 
   function logParser(file) {
-    // console.log(file);
+    console.log(file);
     fileReader.onload = function (event) {
       const res = event.target.result;
-      let fileRows = res.split(/\r?\n/);
-      let timeArray = fileRows.map((row) => row.split(" ", 2));
+      logRows = res.split(/\r?\n/);
+      let timeArray = logRows.map((row) => row.split(" ", 2));
 
-      console.log(fileRows[0], timeArray[0]);
+      console.log(logRows[0], timeArray[0]);
     };
 
     fileReader.readAsText(file);
@@ -44,6 +45,7 @@ const FileImporter = () => {
         labels: reduceData(dataObject.Time),
         datasets: [{ label: "Pump1", data: reduceData(dataObject.Pump1) }],
       };
+
       setData(datasetObject);
     };
     fileReader.onload = function (event) {
@@ -59,19 +61,14 @@ const FileImporter = () => {
     fileReader.readAsText(file);
   }
 
-  const handleOnChange = (e) => {
-    setFile(e.target.files[0]);
+  const handleOnChange = (e, isCsv) => {
+    isCsv ? setCsvFile(e.target.files[0]) : setLogFile(e.target.files[0]);
   };
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    if (file.type === "text/csv") {
-      csvParser(file);
-    } else if (file.type === "application/dflog") {
-      logParser (file);
-    } else {
-      console.log("File not supported");
-    }
+    csvParser(csvFile);
+    logParser(logFile);
   };
   return (
     <div style={{ textAlign: "center" }}>
@@ -82,14 +79,14 @@ const FileImporter = () => {
           type={"file"}
           id={"csvFileInput"}
           accept={".csv"}
-          onChange={handleOnChange}
+          onChange={(e) => handleOnChange(e, true)}
         />
         <label htmlFor="logFileInput">Choose Log File</label>
         <input
           type={"file"}
           id={"logFileInput"}
           accept={".log"}
-          onChange={handleOnChange}
+          onChange={(e) => handleOnChange(e, false)}
         />
 
         <button
