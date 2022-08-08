@@ -1,6 +1,6 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
-import * as brush from "chartjs-plugin-brush";
+//
 import { Chart as ChartJS, registerables } from "chart.js";
 import zoom from "chartjs-plugin-zoom";
 // DISPLAYS THE CHART
@@ -25,6 +25,7 @@ const BarChart = (props) => {
           mode: "xy",
         },
       },
+      tooltip: {},
     },
   };
   console.log(dataSet);
