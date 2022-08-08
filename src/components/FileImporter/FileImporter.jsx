@@ -10,7 +10,7 @@ const FileImporter = () => {
 
   function logParser(file) {
     console.log(file);
-    fileReader.onload = function (event) {
+    fileReader.onload = async function (event) {
       const res = event.target.result;
       logRows = res.split(/\r?\n/);
       let timeArray = logRows.map((row) => row.split(" ", 2));
@@ -48,7 +48,7 @@ const FileImporter = () => {
 
       setData(datasetObject);
     };
-    fileReader.onload = function (event) {
+    fileReader.onload = async function (event) {
       const csvOutput = Papa.parse(event.target.result, {
         header: false, //set to 'true' if you want the data to be saved as an array of objects with the first array as the keys.
         complete: () => {
@@ -61,14 +61,18 @@ const FileImporter = () => {
     fileReader.readAsText(file);
   }
 
-  const handleOnChange = (e, isCsv) => {
-    isCsv ? setCsvFile(e.target.files[0]) : setLogFile(e.target.files[0]);
+  const handleOnChangeCSV = (e) => {
+    setCsvFile(e.target.files[0]);
+  };
+
+  const handleOnChangeLOG = (e) => {
+    setLogFile(e.target.files[0]);
   };
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    csvParser(csvFile);
     logParser(logFile);
+    csvParser(csvFile);
   };
   return (
     <div style={{ textAlign: "center" }}>
@@ -79,14 +83,14 @@ const FileImporter = () => {
           type={"file"}
           id={"csvFileInput"}
           accept={".csv"}
-          onChange={(e) => handleOnChange(e, true)}
+          onChange={handleOnChangeCSV}
         />
         <label htmlFor="logFileInput">Choose Log File</label>
         <input
           type={"file"}
           id={"logFileInput"}
           accept={".log"}
-          onChange={(e) => handleOnChange(e, false)}
+          onChange={handleOnChangeLOG}
         />
 
         <button
