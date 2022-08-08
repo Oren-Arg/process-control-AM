@@ -8,13 +8,13 @@ const FileImporter = () => {
   const [file, setFile] = useState();
 
   function logParser(file) {
-    let fileRows = file.split(/\r?\n/);
-    let timeArray = fileRows.map((row) => row.split(" ", 2));
-
-    console.log(fileRows[0], timeArray[0]);
-
+    // console.log(file);
     fileReader.onload = function (event) {
-      logParser(event.target.result);
+      const res = event.target.result;
+      let fileRows = res.split(/\r?\n/);
+      let timeArray = fileRows.map((row) => row.split(" ", 2));
+
+      console.log(fileRows[0], timeArray[0]);
     };
 
     fileReader.readAsText(file);
@@ -68,7 +68,7 @@ const FileImporter = () => {
     if (file.type === "text/csv") {
       csvParser(file);
     } else if (file.type === "application/dflog") {
-      logParser(file);
+      logParser (file);
     } else {
       console.log("File not supported");
     }
